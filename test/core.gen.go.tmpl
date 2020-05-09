@@ -1,0 +1,19 @@
+package test
+
+import (
+	"fmt"
+	"reflect"
+	"github.com/spf13/cast"
+)
+
+func Testing(kind reflect.Kind, value interface{}) {
+	switch kind {
+		{{range .In}}
+		{{ $Type := print .name | stringsTitle }}
+		case reflect.{{ $Type }}:
+			fmt.Println("{{ .name }}", cast.To{{ $Type }}(value))
+		{{end}}
+		default:
+			panic(fmt.Errorf("unhandled type %v", kind))
+	}
+}
