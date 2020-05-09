@@ -10,7 +10,7 @@ It will add YAML support asap to give comments possibility on data feeding the g
 
 Usage is inspired by test package
 
-After installing genious with go get or go install, use a go generate directive:
+After installing genius with `go get` or `go install`, use a `go generate` directive:
 ```go
 package yourpackage
 
