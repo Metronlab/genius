@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-# The -o pipefail option is important for the trap to be executed if the "go test" command fails
+# The -o pipefail option is important for the trap to be executed if the "go examples" command fails
 set -o pipefail
 
 : ${TEST_RESULTS:=/tmp/test-results}
@@ -25,7 +25,7 @@ if [ "$FAILFAST" == true ]; then
 fi
 
 go test ${PKG} -v ${failfast_flag} -short=${SHORT} -timeout ${TIMEOUT} -race -cover -covermode=atomic -coverprofile=${COVER_RESULTS}/coverage.cover -run ${RUN} \
-    | tee ${TEST_RESULTS}/go-test.out \
+    | tee ${TEST_RESULTS}/go-examples.out \
     | sed ''/PASS/s//$(printf "\033[32mPASS\033[0m")/'' \
     | sed ''/FAIL/s//$(printf "\033[31mFAIL\033[0m")/'' \
     | sed ''/RUN/s//$(printf "\033[34mRUN\033[0m")/''
