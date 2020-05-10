@@ -1,4 +1,4 @@
-package errdef
+package geniuserr
 
 import "errors"
 

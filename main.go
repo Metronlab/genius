@@ -2,7 +2,7 @@ package main
 
 import (
 	"errors"
-	"github.com/Metronlab/genius/internal/errdef"
+	"github.com/Metronlab/genius/internal/geniuserr"
 	"gopkg.in/urfave/cli.v2"
 	"log"
 	"os"
@@ -35,7 +35,7 @@ func main() {
 	if err != nil {
 		log.Println(err)
 
-		if errors.Is(err, errdef.ErrDryMismatch) {
+		if errors.Is(err, geniuserr.ErrDryMismatch) {
 			syscall.Exit(2)
 		}
 		syscall.Exit(1)

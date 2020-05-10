@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/Metronlab/genius/internal/data"
-	"github.com/Metronlab/genius/internal/tmpl"
+	"github.com/Metronlab/genius/internal/geniuscmd/tmpl"
+	"github.com/Metronlab/genius/internal/geniusio"
+	"github.com/Metronlab/genius/internal/geniustypes"
 	"gopkg.in/urfave/cli.v2"
 )
 
@@ -25,7 +26,7 @@ var Tmpl = &cli.Command{
 			Name:    flagDataValues,
 			Aliases: []string{"v"},
 			Usage:   "values given with the format `key=value` that will be added to your accessible data",
-			Value:   make(tmpl.ValuesMap),
+			Value:   make(geniustypes.ValuesMap),
 		},
 		&cli.BoolFlag{
 			Name:    flagGoImports,
@@ -37,10 +38,10 @@ var Tmpl = &cli.Command{
 	Action: func(c *cli.Context) error {
 		return tmpl.Tmpl(
 			c.String(flagDataPath),
-			c.Generic(flagDataValues).(tmpl.ValuesMap),
+			c.Generic(flagDataValues).(geniustypes.ValuesMap),
 			c.Args().Slice(),
 			c.Bool(flagGoImports),
-			data.GetGenerationWriteFunc(c.Bool(flagDryRun)),
+			geniusio.GetGenerationWriteFunc(c.Bool(flagDryRun)),
 		)
 	},
 }

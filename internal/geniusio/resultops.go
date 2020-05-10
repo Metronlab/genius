@@ -1,15 +1,16 @@
-package data
+package geniusio
 
 import (
 	"fmt"
-	"github.com/Metronlab/genius/internal/errdef"
+	"github.com/Metronlab/genius/internal/geniuserr"
+	"github.com/Metronlab/genius/internal/geniustypes"
 	"github.com/pmezard/go-difflib/difflib"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"os"
 )
 
-type GenerationWriteFunc func(spec PathSpec, generated []byte) error
+type GenerationWriteFunc func(spec geniustypes.PathSpec, generated []byte) error
 
 func GetGenerationWriteFunc(dryRun bool) GenerationWriteFunc {
 	if dryRun {
@@ -18,7 +19,7 @@ func GetGenerationWriteFunc(dryRun bool) GenerationWriteFunc {
 	return writeResult
 }
 
-func cmpResult(spec PathSpec, generated []byte) (err error) {
+func cmpResult(spec geniustypes.PathSpec, generated []byte) (err error) {
 	defer func() {
 		if err != nil {
 			err = fmt.Errorf("comparing file %s, %w", spec.Out, err)
@@ -47,10 +48,10 @@ func cmpResult(spec PathSpec, generated []byte) (err error) {
 		return err
 	}
 
-	return fmt.Errorf("%w: %s", errdef.ErrDryMismatch, diff)
+	return fmt.Errorf("%w: %s", geniuserr.ErrDryMismatch, diff)
 }
 
-func writeResult(spec PathSpec, generated []byte) (err error) {
+func writeResult(spec geniustypes.PathSpec, generated []byte) (err error) {
 	defer func() {
 		if err != nil {
 			err = fmt.Errorf("writing file %s, %w", spec.Out, err)

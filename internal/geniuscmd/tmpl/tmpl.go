@@ -4,7 +4,8 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"github.com/Metronlab/genius/internal/data"
+	"github.com/Metronlab/genius/internal/geniusio"
+	"github.com/Metronlab/genius/internal/geniustypes"
 	"go/format"
 	"io/ioutil"
 	"log"
@@ -13,8 +14,8 @@ import (
 	"text/template"
 )
 
-func Tmpl(dataPath string, values ValuesMap, args []string,
-	goImportsEnable bool, write data.GenerationWriteFunc) error {
+func Tmpl(dataPath string, values geniustypes.ValuesMap, args []string,
+	goImportsEnable bool, write geniusio.GenerationWriteFunc) error {
 	var err error
 	entries := specEnvironment{
 		Values: values,
@@ -37,14 +38,14 @@ func Tmpl(dataPath string, values ValuesMap, args []string,
 		return errors.New("no tmpl files specified")
 	}
 
-	entries.Data, err = data.ReadFileData(dataPath)
+	entries.Data, err = geniusio.ReadFileData(dataPath)
 	if err != nil {
 		return fmt.Errorf("impossible to read input data file: %w", err)
 	}
 
-	specs := make([]data.PathSpec, len(args))
+	specs := make([]geniustypes.PathSpec, len(args))
 	for i, p := range args {
-		if specs[i], err = data.MakePathSpec(p); err != nil {
+		if specs[i], err = geniustypes.MakePathSpec(p); err != nil {
 			return err
 		}
 	}
@@ -66,7 +67,7 @@ func Tmpl(dataPath string, values ValuesMap, args []string,
 
 type specEnvironment struct {
 	Data   interface{}
-	Values ValuesMap
+	Values geniustypes.ValuesMap
 }
 
 var funcs = template.FuncMap{
@@ -75,7 +76,7 @@ var funcs = template.FuncMap{
 	"stringsTitle": strings.Title,
 }
 
-func generate(data interface{}, spec data.PathSpec) ([]byte, error) {
+func generate(data interface{}, spec geniustypes.PathSpec) ([]byte, error) {
 	var (
 		t   *template.Template
 		err error

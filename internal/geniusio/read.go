@@ -1,4 +1,4 @@
-package data
+package geniusio
 
 import (
 	"encoding/json"
