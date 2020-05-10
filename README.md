@@ -15,8 +15,8 @@ tmpl bring goland template framework to go code itself using tmpl specs and data
 
 Command tmpl is a complete rework of [original](https://github.com/influxdata/influxdb/tree/master/tools/tmpl)
 influxdata framework for generate golang code.
-It remove support for .json comments wich is an unsafe / non ide proof way to derivate json spec but add YAML support
-to give comments possibility on data feeding the generation.
+It removes support for .json comments which is an unsafe / non ide proof way to derive json specification but add YAML support
+to allow adding comments on data feeding the generation.
 Original licence is maintained [here](licence/LICENCE).
 
 #### Features
