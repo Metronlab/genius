@@ -7,6 +7,7 @@ import (
 	"github.com/pmezard/go-difflib/difflib"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
+	"log"
 	"os"
 )
 
@@ -14,6 +15,7 @@ type GenerationWriteFunc func(spec geniustypes.TmplSpecPaths, generated []byte) 
 
 func GetGenerationWriteFunc(dryRun bool) GenerationWriteFunc {
 	if dryRun {
+		log.Println("genius dry run enabled")
 		return cmpResult
 	}
 	return writeResult
