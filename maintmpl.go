@@ -1,8 +1,15 @@
 package main
 
 import (
+	"github.com/Metronlab/genius/internal/data"
 	"github.com/Metronlab/genius/internal/tmpl"
 	"gopkg.in/urfave/cli.v2"
+)
+
+const (
+	flagDataPath   = "dataPath"
+	flagDataValues = "values"
+	flagGoImports  = "enableGoImports"
 )
 
 var Tmpl = &cli.Command{
@@ -18,7 +25,7 @@ var Tmpl = &cli.Command{
 			Name:    flagDataValues,
 			Aliases: []string{"v"},
 			Usage:   "values given with the format `key=value` that will be added to your accessible data",
-			Value:   make(tmpl.ValuesList),
+			Value:   make(tmpl.ValuesMap),
 		},
 		&cli.BoolFlag{
 			Name:    flagGoImports,
@@ -30,9 +37,10 @@ var Tmpl = &cli.Command{
 	Action: func(c *cli.Context) error {
 		return tmpl.Tmpl(
 			c.String(flagDataPath),
-			c.Generic(flagDataValues).(tmpl.ValuesList),
-			c.Bool(flagGoImports),
+			c.Generic(flagDataValues).(tmpl.ValuesMap),
 			c.Args().Slice(),
+			c.Bool(flagGoImports),
+			data.GetGenerationWriteFunc(c.Bool(flagDryRun)),
 		)
 	},
 }

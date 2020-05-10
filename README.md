@@ -13,10 +13,11 @@ Use `genius $COMMAND --help` to see usage on each possibilities
 tmpl bring goland template framework to go code itself using tmpl specs and data files in various format.
 
 
-Command tmpl is a rework of [original](https://github.com/influxdata/influxdb/tree/master/tools/tmpl)
+Command tmpl is a complete rework of [original](https://github.com/influxdata/influxdb/tree/master/tools/tmpl)
 influxdata framework for generate golang code.
 It remove support for .json comments wich is an unsafe / non ide proof way to derivate json spec but add YAML support
 to give comments possibility on data feeding the generation.
+Original licence is maintained [here](licence/LICENCE).
 
 #### Features
 - run go fmt over generated code at code gen
@@ -26,6 +27,8 @@ to give comments possibility on data feeding the generation.
     - toml
 - With option `-v` support command line defined values as a key value pair
 - With option `-i` can run `goimports` command at generation to correct missing import paths 
+- With option `-dry` or better with environment `GENIUS_DRY=true` allow comparing result with targeted file 
+instead of generating it again. Wich can be useful in continuous integration logics
 
 #### Getting started
 
