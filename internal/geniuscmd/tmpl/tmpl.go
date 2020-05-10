@@ -43,7 +43,7 @@ func Tmpl(dataPath string, values geniustypes.ValuesMap, args []string,
 		return fmt.Errorf("impossible to read input data file: %w", err)
 	}
 
-	specs := make([]geniustypes.PathSpec, len(args))
+	specs := make([]geniustypes.TmplSpecPaths, len(args))
 	for i, p := range args {
 		if specs[i], err = geniustypes.MakePathSpec(p); err != nil {
 			return err
@@ -76,7 +76,7 @@ var funcs = template.FuncMap{
 	"stringsTitle": strings.Title,
 }
 
-func generate(data interface{}, spec geniustypes.PathSpec) ([]byte, error) {
+func generate(data interface{}, spec geniustypes.TmplSpecPaths) ([]byte, error) {
 	var (
 		t   *template.Template
 		err error

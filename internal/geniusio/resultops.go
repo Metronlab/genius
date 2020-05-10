@@ -10,7 +10,7 @@ import (
 	"os"
 )
 
-type GenerationWriteFunc func(spec geniustypes.PathSpec, generated []byte) error
+type GenerationWriteFunc func(spec geniustypes.TmplSpecPaths, generated []byte) error
 
 func GetGenerationWriteFunc(dryRun bool) GenerationWriteFunc {
 	if dryRun {
@@ -19,7 +19,7 @@ func GetGenerationWriteFunc(dryRun bool) GenerationWriteFunc {
 	return writeResult
 }
 
-func cmpResult(spec geniustypes.PathSpec, generated []byte) (err error) {
+func cmpResult(spec geniustypes.TmplSpecPaths, generated []byte) (err error) {
 	defer func() {
 		if err != nil {
 			err = fmt.Errorf("comparing file %s, %w", spec.Out, err)
@@ -51,7 +51,7 @@ func cmpResult(spec geniustypes.PathSpec, generated []byte) (err error) {
 	return fmt.Errorf("%w: %s", geniuserr.ErrDryMismatch, diff)
 }
 
-func writeResult(spec geniustypes.PathSpec, generated []byte) (err error) {
+func writeResult(spec geniustypes.TmplSpecPaths, generated []byte) (err error) {
 	defer func() {
 		if err != nil {
 			err = fmt.Errorf("writing file %s, %w", spec.Out, err)
