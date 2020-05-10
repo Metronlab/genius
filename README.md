@@ -33,7 +33,9 @@ instead of generating it again. Wich can be useful in continuous integration log
 #### Getting started
 
 Getting started is inspired by example subdirectory.
-After installing genious with go install, use a go generate directive:
+
+After installing genius with `go get` or `go install`, use a `go generate` directive:
+
 ```go
 package yourpackage
 
