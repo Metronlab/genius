@@ -1,4 +1,6 @@
-package test
+// authors {{.Values.authors}}
+
+package tmpl
 
 import (
 	"fmt"
@@ -8,12 +10,11 @@ import (
 
 func Testing(kind reflect.Kind, value interface{}) {
 	switch kind {
-		{{range .In}}
-		{{ $Type := print .name | stringsTitle }}
+	{{range .Data -}}
+	{{ $Type := print .name | stringsTitle -}}
 		case reflect.{{ $Type }}:
 			fmt.Println("{{ .name }}", cast.To{{ $Type }}(value))
-		{{end}}
+    {{end -}}
 		default:
 			panic(fmt.Errorf("unhandled type %v", kind))
-	}
-}
+	}} // fmt is automatically run and correct file discrepancies

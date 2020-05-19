@@ -1,4 +1,4 @@
-all: count fix-fmt check tests
+all: count fix-fmt check test
 
 install: ## install dependencies
 	@go get golang.org/x/lint/golint \
@@ -8,10 +8,10 @@ install: ## install dependencies
 		github.com/jstemmer/go-junit-report
 	go install .
 
-tests: ## Run unit tests
+test: ## Run unit tests
 	go install .
 	go generate ./...
-	diff ./test/core.gen.go.expected ./test/core.gen.go
+	diff ./examples/tmpl/core.gen.go.expected ./examples/tmpl/core.gen.go
 	./tools/script/test.sh
 
 fix-fmt: ## use fmt -w
