@@ -81,26 +81,22 @@ var funcs = template.FuncMap{
 	"stringsUpper": strings.ToUpper,
 	"stringsTitle": strings.Title,
 	"marshalJson": func(v interface{}) string {
-		res, err := json.Marshal(v)
-		if err != nil {
-			panic(err)
-		}
-		return string(res)
+		return marshal(v, json.Marshal)
 	},
 	"marshalYaml": func(v interface{}) string {
-		res, err := yaml.Marshal(v)
-		if err != nil {
-			panic(err)
-		}
-		return string(res)
+		return marshal(v, yaml.Marshal)
 	},
 	"marshalToml": func(v interface{}) string {
-		res, err := toml.Marshal(v)
-		if err != nil {
-			panic(err)
-		}
-		return string(res)
+		return marshal(v, toml.Marshal)
 	},
+}
+
+func marshal(v interface{}, marshalizer func(v interface{}) ([]byte, error)) string {
+	res, err := marshalizer(v)
+	if err != nil {
+		panic(err)
+	}
+	return string(res)
 }
 
 func generate(data interface{}, spec geniustypes.TmplSpecPaths) ([]byte, error) {
