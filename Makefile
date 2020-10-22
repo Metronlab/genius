@@ -12,6 +12,7 @@ test: ## Run unit tests
 	go install .
 	go generate ./...
 	diff ./examples/tmpl/core.gen.go.expected ./examples/tmpl/core.gen.go
+	diff ./examples/tmpl/types.gen.json.expected ./examples/tmpl/types.gen.json
 	./tools/script/test.sh
 
 fix-fmt: ## use fmt -w
