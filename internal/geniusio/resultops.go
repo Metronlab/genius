@@ -2,13 +2,14 @@ package geniusio
 
 import (
 	"fmt"
+	"io/ioutil"
+	"log"
+	"os"
+
 	"github.com/Metronlab/genius/internal/geniuserr"
 	"github.com/Metronlab/genius/internal/geniustypes"
 	"github.com/pmezard/go-difflib/difflib"
 	"github.com/stretchr/testify/assert"
-	"io/ioutil"
-	"log"
-	"os"
 )
 
 type GenerationWriteFunc func(spec geniustypes.TmplSpecPaths, generated []byte) error

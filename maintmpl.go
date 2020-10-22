@@ -8,10 +8,11 @@ import (
 )
 
 const (
-	flagDataPath   = "dataPath"
-	flagDataFormat = "dataFormat"
-	flagDataValues = "values"
-	flagGoImports  = "enableGoImports"
+	flagDataPath     = "dataPath"
+	flagDataFormat   = "dataFormat"
+	flagDataValues   = "values"
+	flagGoImports    = "enableGoImports"
+	flagOutputPrefix = "outputPrefix"
 )
 
 var Tmpl = &cli.Command{
@@ -38,14 +39,20 @@ var Tmpl = &cli.Command{
 		&cli.BoolFlag{
 			Name:    flagGoImports,
 			Aliases: []string{"i"},
-			Usage:   "enable usage of go imports ",
+			Usage:   "enable usage of go imports",
 			Value:   false,
+		},
+		&cli.StringFlag{
+			Name:    flagOutputPrefix,
+			Aliases: []string{"p"},
+			Usage:   "specify output prefix",
 		},
 	},
 	Action: func(c *cli.Context) error {
 		return tmpl.Tmpl(
 			c.String(flagDataPath),
 			c.String(flagDataFormat),
+			c.String(flagOutputPrefix),
 			c.Generic(flagDataValues).(geniustypes.ValuesMap),
 			c.Args().Slice(),
 			c.Bool(flagGoImports),

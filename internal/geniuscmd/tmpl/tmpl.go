@@ -20,7 +20,7 @@ import (
 
 var json = jsoniter.ConfigCompatibleWithStandardLibrary
 
-func Tmpl(dataPath, dataFormat string, values geniustypes.ValuesMap, args []string,
+func Tmpl(dataPath, dataFormat, prefixOutput string, values geniustypes.ValuesMap, args []string,
 	goImportsEnable bool, write geniusio.GenerationWriteFunc) error {
 	var err error
 	entries := specEnvironment{
@@ -47,7 +47,7 @@ func Tmpl(dataPath, dataFormat string, values geniustypes.ValuesMap, args []stri
 
 	specs := make([]geniustypes.TmplSpecPaths, len(args))
 	for i, p := range args {
-		if specs[i], err = geniustypes.MakePathSpec(p); err != nil {
+		if specs[i], err = geniustypes.MakePathSpec(prefixOutput, p); err != nil {
 			return err
 		}
 	}
