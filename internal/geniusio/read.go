@@ -10,6 +10,7 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	"strings"
 
 	"github.com/BurntSushi/toml"
 	"gopkg.in/yaml.v2"
@@ -21,14 +22,14 @@ var ErrUnsupportedEncoding = errors.New("unsupported encoding")
 func ReadFileData(path, format string) (interface{}, error) {
 	var unmarshal func(data []byte, v interface{}) error
 	var err error
-	if path == "" {
-		if format == "" {
+	if format == "" {
+		if path == "" {
 			format = "txt"
+		} else {
+			format = filepath.Ext(path)[1:]
 		}
-		unmarshal, err = makeUnmarshaller(fmt.Sprintf(".%s", format))
-	} else {
-		unmarshal, err = makeUnmarshaller(filepath.Ext(path))
 	}
+	unmarshal, err = makeUnmarshaller(format)
 	if err != nil {
 		return nil, err
 	}
@@ -60,14 +61,15 @@ func readStdIn(unmarshall func(data []byte, v interface{}) error) (v interface{}
 }
 
 func makeUnmarshaller(extension string) (func(data []byte, v interface{}) error, error) {
+	extension = strings.ToLower(extension)
 	switch extension {
-	case ".json", ".JSON":
+	case "json":
 		return json.Unmarshal, nil
-	case ".yaml", ".YAML", ".yml", ".YML":
+	case "yaml", "yml":
 		return yaml.Unmarshal, nil
-	case ".toml", ".TOML":
+	case "toml":
 		return toml.Unmarshal, nil
-	case ".txt", ".text":
+	case "txt", "text":
 		return func(data []byte, v interface{}) error {
 			rv := reflect.ValueOf(v)
 			if rv.Kind() != reflect.Ptr || rv.IsNil() {
