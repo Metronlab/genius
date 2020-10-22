@@ -27,10 +27,6 @@ func Tmpl(dataPath string, values geniustypes.ValuesMap, args []string,
 		Values: values,
 	}
 
-	if dataPath == "" {
-		return errors.New("data option is required")
-	}
-
 	if goImportsEnable {
 		if _, err := exec.LookPath("goimports"); err != nil {
 			return fmt.Errorf("failed to find goimports: %w", err)
