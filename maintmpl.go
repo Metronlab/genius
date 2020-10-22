@@ -20,7 +20,8 @@ var Tmpl = &cli.Command{
 		&cli.StringFlag{
 			Name:    flagDataPath,
 			Aliases: []string{"data", "d"},
-			Usage:   "path to your data file like `file.json` in anyone of supported serialisation format",
+			Usage: "path to your data file like `file.json` in anyone of supported serialisation format, " +
+				"if not specified, use stdin as text entry",
 		},
 		&cli.GenericFlag{
 			Name:    flagDataValues,
