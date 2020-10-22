@@ -27,7 +27,7 @@ var Tmpl = &cli.Command{
 		},
 		&cli.StringFlag{
 			Name:    flagDataFormat,
-			Aliases: []string{"e"},
+			Aliases: []string{"ext", "extension"},
 			Usage:   "specify input data format and overide extension, accept json, yaml, toml and text",
 		},
 		&cli.GenericFlag{
