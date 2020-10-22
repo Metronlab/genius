@@ -9,6 +9,7 @@ import (
 
 const (
 	flagDataPath   = "dataPath"
+	flagDataFormat = "dataFormat"
 	flagDataValues = "values"
 	flagGoImports  = "enableGoImports"
 )
@@ -22,6 +23,11 @@ var Tmpl = &cli.Command{
 			Aliases: []string{"data", "d"},
 			Usage: "path to your data file like `file.json` in anyone of supported serialisation format, " +
 				"if not specified, use stdin as text entry",
+		},
+		&cli.StringFlag{
+			Name:    flagDataFormat,
+			Aliases: []string{"e"},
+			Usage:   "specify input data format and overide extension, accept json, yaml, toml and text",
 		},
 		&cli.GenericFlag{
 			Name:    flagDataValues,
@@ -39,6 +45,7 @@ var Tmpl = &cli.Command{
 	Action: func(c *cli.Context) error {
 		return tmpl.Tmpl(
 			c.String(flagDataPath),
+			c.String(flagDataFormat),
 			c.Generic(flagDataValues).(geniustypes.ValuesMap),
 			c.Args().Slice(),
 			c.Bool(flagGoImports),
