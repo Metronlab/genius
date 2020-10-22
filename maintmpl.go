@@ -27,7 +27,7 @@ var Tmpl = &cli.Command{
 		},
 		&cli.StringFlag{
 			Name:    flagDataFormat,
-			Aliases: []string{"ext", "extension"},
+			Aliases: []string{"e", "ext", "extension"},
 			Usage:   "specify input data format and overide extension, accept json, yaml, toml and text",
 		},
 		&cli.GenericFlag{
@@ -44,7 +44,7 @@ var Tmpl = &cli.Command{
 		},
 		&cli.StringFlag{
 			Name:    flagOutputPrefix,
-			Aliases: []string{"p"},
+			Aliases: []string{"p", "prefix"},
 			Usage:   "specify output prefix",
 		},
 	},
