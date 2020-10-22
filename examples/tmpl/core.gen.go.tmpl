@@ -10,7 +10,7 @@ import (
 
 func Testing(kind reflect.Kind, value interface{}) {
 	switch kind {
-	{{range .Data -}}
+	{{range .Data.types -}}
 	{{ $Type := print .name | stringsTitle -}}
 		case reflect.{{ $Type }}:
 			fmt.Println("{{ .name }}", cast.To{{ $Type }}(value))

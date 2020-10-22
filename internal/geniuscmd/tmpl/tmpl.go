@@ -4,15 +4,21 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"github.com/Metronlab/genius/internal/geniusio"
-	"github.com/Metronlab/genius/internal/geniustypes"
 	"go/format"
 	"io/ioutil"
 	"log"
 	"os/exec"
 	"strings"
 	"text/template"
+
+	"github.com/Metronlab/genius/internal/geniusio"
+	"github.com/Metronlab/genius/internal/geniustypes"
+	jsoniter "github.com/json-iterator/go"
+	"github.com/pelletier/go-toml"
+	"gopkg.in/yaml.v2"
 )
+
+var json = jsoniter.ConfigCompatibleWithStandardLibrary
 
 func Tmpl(dataPath string, values geniustypes.ValuesMap, args []string,
 	goImportsEnable bool, write geniusio.GenerationWriteFunc) error {
@@ -74,6 +80,23 @@ var funcs = template.FuncMap{
 	"stringsLower": strings.ToLower,
 	"stringsUpper": strings.ToUpper,
 	"stringsTitle": strings.Title,
+	"marshalJson": func(v interface{}) string {
+		return marshal(v, json.Marshal)
+	},
+	"marshalYaml": func(v interface{}) string {
+		return marshal(v, yaml.Marshal)
+	},
+	"marshalToml": func(v interface{}) string {
+		return marshal(v, toml.Marshal)
+	},
+}
+
+func marshal(v interface{}, marshalizer func(v interface{}) ([]byte, error)) string {
+	res, err := marshalizer(v)
+	if err != nil {
+		panic(err)
+	}
+	return string(res)
 }
 
 func generate(data interface{}, spec geniustypes.TmplSpecPaths) ([]byte, error) {

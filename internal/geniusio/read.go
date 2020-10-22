@@ -4,10 +4,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/BurntSushi/toml"
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"path/filepath"
+
+	"github.com/BurntSushi/toml"
+	"gopkg.in/yaml.v2"
 )
 
 var ErrUnsupportedEncoding = errors.New("unsupported encoding")
