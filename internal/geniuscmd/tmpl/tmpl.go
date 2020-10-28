@@ -20,7 +20,7 @@ import (
 
 var json = jsoniter.ConfigCompatibleWithStandardLibrary
 
-func Tmpl(dataPath string, values geniustypes.ValuesMap, args []string,
+func Tmpl(dataPath, dataFormat, prefixOutput string, values geniustypes.ValuesMap, args []string,
 	goImportsEnable bool, write geniusio.GenerationWriteFunc) error {
 	var err error
 	entries := specEnvironment{
@@ -40,14 +40,14 @@ func Tmpl(dataPath string, values geniustypes.ValuesMap, args []string,
 		return errors.New("no tmpl files specified")
 	}
 
-	entries.Data, err = geniusio.ReadFileData(dataPath)
+	entries.Data, err = geniusio.ReadFileData(dataPath, dataFormat)
 	if err != nil {
 		return fmt.Errorf("impossible to read input data file: %w", err)
 	}
 
 	specs := make([]geniustypes.TmplSpecPaths, len(args))
 	for i, p := range args {
-		if specs[i], err = geniustypes.MakePathSpec(p); err != nil {
+		if specs[i], err = geniustypes.MakePathSpec(prefixOutput, p); err != nil {
 			return err
 		}
 	}
