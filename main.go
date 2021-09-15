@@ -2,11 +2,12 @@ package main
 
 import (
 	"errors"
-	"github.com/Metronlab/genius/internal/geniuserr"
-	"gopkg.in/urfave/cli.v2"
 	"log"
 	"os"
 	"syscall"
+
+	"github.com/Metronlab/genius/internal/geniuserr"
+	"gopkg.in/urfave/cli.v2"
 )
 
 const flagDryRun = "dry"
